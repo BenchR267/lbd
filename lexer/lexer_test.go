@@ -6,6 +6,41 @@ import (
 	"github.com/BenchR267/lbd/lexer/token"
 )
 
+func TestIgnoreWhitespace(t *testing.T) {
+	stream := StreamFromString("a=    5")
+	l := NewLexer(stream)
+	l.Start()
+
+	expectedValues := []token.Token{
+		token.Token{
+			Pos:  token.Position{Line: 0, Column: 0, Len: 1},
+			Type: token.Identifier,
+			Raw:  "a",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 0, Column: 1, Len: 1},
+			Type: token.Assign,
+			Raw:  "=",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 0, Column: 6, Len: 1},
+			Type: token.Integer,
+			Raw:  "5",
+		},
+	}
+
+	i := 0
+	for token := range l.NextToken {
+		expected := expectedValues[i]
+
+		if expected != token {
+			t.Errorf("Expected: %#v, got: %#v.", expected, token)
+		}
+
+		i++
+	}
+}
+
 func TestStart_OneLine(t *testing.T) {
 	stream := StreamFromString("abc = dfe + 3")
 	l := NewLexer(stream)

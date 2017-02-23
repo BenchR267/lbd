@@ -26,6 +26,9 @@ func (b *Tokenizer) append(by byte, pos token.Position) *token.Token {
 
 func (b *Tokenizer) token(currentPosition token.Position) *token.Token {
 	content := string(b.content)
+	if len(content) == 0 {
+		return nil
+	}
 	b.content = []byte{}
 	p := currentPosition
 	p.Column -= len(content)
