@@ -38,10 +38,10 @@ func TestTokenizer(t *testing.T) {
 
 	for _, c := range testCases {
 		tokenizer := Tokenizer{
-			content: []byte{},
+			content: []rune{},
 		}
 		for i := 0; i < len(c.input); i++ {
-			got := tokenizer.append(c.input[i], token.Position{})
+			got := tokenizer.append(rune(c.input[i]), token.Position{})
 			if got != nil {
 				t.Errorf("Expected token to be nil, but got %#v instead. input: %s", got, c.input)
 			}

@@ -10,7 +10,7 @@ func TestStreamFromString(t *testing.T) {
 	stream := StreamFromString(input)
 
 	for b := range stream {
-		if b != input[count] {
+		if b != rune(input[count]) {
 			t.Errorf("Expected to receive %c over channel at index %d from input %s", b, count, input)
 		}
 		count++
@@ -23,7 +23,7 @@ func TestStreamFromString(t *testing.T) {
 
 func TestIsWhitespace(t *testing.T) {
 	testCases := []struct {
-		input    byte
+		input    rune
 		expected bool
 	}{
 		{'a', false},
@@ -42,7 +42,7 @@ func TestIsWhitespace(t *testing.T) {
 
 func TestIsLetter(t *testing.T) {
 	testCases := []struct {
-		input    byte
+		input    rune
 		expected bool
 	}{
 		{'a', true},

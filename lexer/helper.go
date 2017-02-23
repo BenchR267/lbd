@@ -2,11 +2,11 @@ package lexer
 
 import "unicode"
 
-func StreamFromString(input string) <-chan byte {
-	c := make(chan byte)
+func StreamFromString(input string) <-chan rune {
+	c := make(chan rune)
 
 	go func() {
-		for _, b := range []byte(input) {
+		for _, b := range input {
 			c <- b
 		}
 		close(c)
@@ -15,10 +15,10 @@ func StreamFromString(input string) <-chan byte {
 	return c
 }
 
-func isWhitespace(b byte) bool {
+func isWhitespace(b rune) bool {
 	return b == '\n' || b == ' '
 }
 
-func isLetter(b byte) bool {
-	return unicode.IsLetter(rune(b))
+func isLetter(b rune) bool {
+	return unicode.IsLetter(b)
 }

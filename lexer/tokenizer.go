@@ -7,10 +7,10 @@ import (
 )
 
 type Tokenizer struct {
-	content []byte
+	content []rune
 }
 
-func (b *Tokenizer) append(by byte, pos token.Position) *token.Token {
+func (b *Tokenizer) append(by rune, pos token.Position) *token.Token {
 
 	content := b.content
 
@@ -29,7 +29,7 @@ func (b *Tokenizer) token(currentPosition token.Position) *token.Token {
 	if len(content) == 0 {
 		return nil
 	}
-	b.content = []byte{}
+	b.content = []rune{}
 	p := currentPosition
 	p.Column -= len(content)
 	p.Len = len(content)
@@ -40,7 +40,7 @@ func (b *Tokenizer) token(currentPosition token.Position) *token.Token {
 	}
 }
 
-func belongsTogether(current []byte, next byte) bool {
+func belongsTogether(current []rune, next rune) bool {
 	if len(current) == 0 {
 		return true
 	}

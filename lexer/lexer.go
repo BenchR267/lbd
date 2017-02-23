@@ -3,7 +3,7 @@ package lexer
 import "github.com/BenchR267/lbd/lexer/token"
 
 type Lexer struct {
-	input <-chan byte
+	input <-chan rune
 
 	NextToken chan token.Token
 
@@ -12,7 +12,7 @@ type Lexer struct {
 	buffer Tokenizer
 }
 
-func NewLexer(inputStream <-chan byte) *Lexer {
+func NewLexer(inputStream <-chan rune) *Lexer {
 	l := &Lexer{
 		input:     inputStream,
 		NextToken: make(chan token.Token),
@@ -21,7 +21,7 @@ func NewLexer(inputStream <-chan byte) *Lexer {
 			Line:   0,
 		},
 		buffer: Tokenizer{
-			content: []byte{},
+			content: []rune{},
 		},
 	}
 	return l
