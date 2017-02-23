@@ -30,6 +30,8 @@ func TestTokenizer(t *testing.T) {
 		{"!=", token.NotEqual},
 		{">", token.Greater},
 		{"<", token.Less},
+		{">=", token.GreaterEqual},
+		{"<=", token.LessEqual},
 
 		{"#", token.Illegal},
 	}
