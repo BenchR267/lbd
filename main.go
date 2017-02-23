@@ -5,10 +5,11 @@ import "fmt"
 
 func main() {
 
-	c := lexer.StreamFromString(`abc == b
-c + d
-b++
-f=5`)
+	c := lexer.StreamFromString(`
+abc = 1
+b = 4
+c = abc + b
+`)
 
 	l := lexer.NewLexer(c)
 

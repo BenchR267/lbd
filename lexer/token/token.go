@@ -25,7 +25,6 @@ const (
 	Identifier Type = iota
 
 	Integer
-	Float
 
 	Parenthesis
 	CurlyBracket

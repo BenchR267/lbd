@@ -44,7 +44,6 @@ func TestTypeString(t *testing.T) {
 	}{
 		{Identifier, "Identifier"},
 		{Integer, "Integer"},
-		{Float, "Float"},
 		{Parenthesis, "Parenthesis"},
 		{CurlyBracket, "CurlyBracket"},
 		{SquareBracket, "SquareBracket"},

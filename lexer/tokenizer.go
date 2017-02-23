@@ -63,7 +63,7 @@ func belongsTogether(current []rune, next rune) bool {
 		s := string(current)
 		t := token.FromRaw(s)
 
-		if t != token.Identifier && t != token.Integer && t != token.Float && t != token.Illegal {
+		if t != token.Identifier && t != token.Integer && t != token.Illegal {
 			return t == token.Illegal
 		} else {
 			return unicode.IsLetter(rune(next))
