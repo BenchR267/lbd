@@ -155,3 +155,80 @@ func TestStart_OneLine(t *testing.T) {
 		i++
 	}
 }
+
+func TestStart_MultipleLines(t *testing.T) {
+	stream := StreamFromString(`a = 5
+b = 4
+c = a + b`)
+	l := NewLexer(stream)
+	l.Start()
+
+	expectedValues := []token.Token{
+		token.Token{
+			Pos:  token.Position{Line: 0, Column: 0, Len: 1},
+			Type: token.Identifier,
+			Raw:  "a",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 0, Column: 2, Len: 1},
+			Type: token.Assign,
+			Raw:  "=",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 0, Column: 4, Len: 1},
+			Type: token.Integer,
+			Raw:  "5",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 1, Column: 0, Len: 1},
+			Type: token.Identifier,
+			Raw:  "b",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 1, Column: 2, Len: 1},
+			Type: token.Assign,
+			Raw:  "=",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 1, Column: 4, Len: 1},
+			Type: token.Integer,
+			Raw:  "4",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 2, Column: 0, Len: 1},
+			Type: token.Identifier,
+			Raw:  "c",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 2, Column: 2, Len: 1},
+			Type: token.Assign,
+			Raw:  "=",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 2, Column: 4, Len: 1},
+			Type: token.Identifier,
+			Raw:  "a",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 2, Column: 6, Len: 1},
+			Type: token.Plus,
+			Raw:  "+",
+		},
+		token.Token{
+			Pos:  token.Position{Line: 2, Column: 8, Len: 1},
+			Type: token.Identifier,
+			Raw:  "b",
+		},
+	}
+
+	i := 0
+	for token := range l.NextToken {
+		expected := expectedValues[i]
+
+		if expected != token {
+			t.Errorf("Expected: %#v, got: %#v.", expected, token)
+		}
+
+		i++
+	}
+}
