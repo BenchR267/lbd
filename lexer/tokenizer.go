@@ -68,5 +68,4 @@ func belongsTogether(current []byte, next byte) bool {
 		return unicode.IsLetter(rune(next)) && token.IsLetter(string(current))
 	}
 
-	return false
 }
