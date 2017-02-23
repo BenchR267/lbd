@@ -41,6 +41,8 @@ const (
 	NotEqual
 	Greater
 	Less
+	GreaterEqual
+	LessEqual
 
 	Illegal
 )
@@ -77,6 +79,10 @@ func FromRaw(raw string) Type {
 		return Greater
 	case "<":
 		return Less
+	case ">=":
+		return GreaterEqual
+	case "<=":
+		return LessEqual
 	}
 	if IsLetter(raw) {
 		return Identifier

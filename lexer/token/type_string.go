@@ -4,9 +4,9 @@ package token
 
 import "fmt"
 
-const _Type_name = "IdentifierIntegerFloatParenthesisCurlyBracketSquareBracketAssignPlusMinusSlashPercentEqualNotEqualGreaterLessIllegal"
+const _Type_name = "IdentifierIntegerFloatParenthesisCurlyBracketSquareBracketAssignPlusMinusSlashPercentEqualNotEqualGreaterLessGreaterEqualLessEqualIllegal"
 
-var _Type_index = [...]uint8{0, 10, 17, 22, 33, 45, 58, 64, 68, 73, 78, 85, 90, 98, 105, 109, 116}
+var _Type_index = [...]uint8{0, 10, 17, 22, 33, 45, 58, 64, 68, 73, 78, 85, 90, 98, 105, 109, 121, 130, 137}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {

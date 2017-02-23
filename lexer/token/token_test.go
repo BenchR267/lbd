@@ -22,6 +22,8 @@ func TestFromRaw(t *testing.T) {
 		{"!=", NotEqual},
 		{">", Greater},
 		{"<", Less},
+		{">=", GreaterEqual},
+		{"<=", LessEqual},
 		{"$", Illegal},
 		{"aVariable", Identifier},
 		{"125", Integer},
@@ -55,6 +57,8 @@ func TestTypeString(t *testing.T) {
 		{NotEqual, "NotEqual"},
 		{Greater, "Greater"},
 		{Less, "Less"},
+		{GreaterEqual, "GreaterEqual"},
+		{LessEqual, "LessEqual"},
 		{Illegal, "Illegal"},
 		{Type(100), "Type(100)"},
 	}
