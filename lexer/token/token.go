@@ -9,6 +9,7 @@ type Type int
 type Position struct {
 	Line   int
 	Column int
+	Len    int
 }
 
 // Token defines one token in the source code
