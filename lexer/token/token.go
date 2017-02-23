@@ -79,6 +79,8 @@ func FromRaw(raw string) Type {
 	}
 	if IsLetter(raw) {
 		return Identifier
+	} else if isInteger(raw) {
+		return Integer
 	}
 	return Illegal
 }
@@ -86,6 +88,15 @@ func FromRaw(raw string) Type {
 func IsLetter(s string) bool {
 	for _, r := range s {
 		if !unicode.IsLetter(r) {
+			return false
+		}
+	}
+	return true
+}
+
+func isInteger(s string) bool {
+	for _, r := range s {
+		if !unicode.IsDigit(r) {
 			return false
 		}
 	}

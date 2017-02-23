@@ -71,6 +71,26 @@ func TestTokenizer(t *testing.T) {
 		expected token.Type
 	}{
 		{"abc", token.Identifier},
+		{"a", token.Identifier},
+
+		{"5", token.Integer},
+
+		{"(", token.Parenthesis},
+		{"{", token.CurlyBracket},
+		{"[", token.SquareBracket},
+
+		{"=", token.Assign},
+		{"+", token.Plus},
+		{"-", token.Minus},
+		{"/", token.Slash},
+		{"%", token.Percent},
+
+		{"==", token.Equal},
+		{"!=", token.NotEqual},
+		{">", token.Greater},
+		{"<", token.Less},
+
+		{"#", token.Illegal},
 	}
 
 	for _, c := range testCases {
