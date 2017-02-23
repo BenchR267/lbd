@@ -6,4 +6,16 @@ Another challenge for me is to write one blog post a week; so creating this proj
 
 Check out all the other stuff at this [LINK](https://blog.benchr.me/).
 
+To get a feeling for the language, here is a first draft of the MVP:
+```
+add = (a int, b int) -> int {
+	return a + b
+}
+
+a = 5
+b = 4
+c = add(a, b)
+print(c)
+```
+
 Thanks!
