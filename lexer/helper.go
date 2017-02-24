@@ -16,7 +16,7 @@ func StreamFromString(input string) <-chan rune {
 }
 
 func isWhitespace(b rune) bool {
-	return b == '\n' || b == ' '
+	return b == '\n' || b == ' ' || b == '\t'
 }
 
 func isLetter(b rune) bool {

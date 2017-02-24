@@ -30,6 +30,7 @@ func TestIsWhitespace(t *testing.T) {
 		{'b', false},
 		{'\n', true},
 		{' ', true},
+		{'\t', true},
 	}
 
 	for _, c := range testCases {
