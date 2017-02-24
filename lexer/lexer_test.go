@@ -197,3 +197,52 @@ func TestConditions(t *testing.T) {
 		i++
 	}
 }
+
+func TestFunction(t *testing.T) {
+	stream := StreamFromString(`
+a = (a int, b int) -> int {
+	return a + b
+}
+	`)
+
+	l := NewLexer(stream)
+	l.Start()
+
+	expectedValues := []struct {
+		Type token.Type
+		Raw  string
+	}{
+		{token.Identifier, "a"},
+		{token.Assign, "="},
+		{token.Parenthesis, "("},
+		{token.Identifier, "a"},
+		{token.Identifier, "int"},
+		{token.Comma, ","},
+		{token.Identifier, "b"},
+		{token.Identifier, "int"},
+		{token.Parenthesis, ")"},
+		{token.Arrow, "->"},
+		{token.Identifier, "int"},
+		{token.CurlyBracket, "{"},
+		{token.Identifier, "return"},
+		{token.Identifier, "a"},
+		{token.Plus, "+"},
+		{token.Identifier, "b"},
+		{token.CurlyBracket, "}"},
+	}
+
+	i := 0
+	for token := range l.NextToken {
+		expected := expectedValues[i]
+
+		if expected.Raw != token.Raw {
+			t.Errorf("Expected Raw: %#v, got: %#v.", expected.Raw, token.Raw)
+		}
+
+		if expected.Type != token.Type {
+			t.Errorf("Expected Type: %#v, got: %#v.", expected.Type, token.Type)
+		}
+
+		i++
+	}
+}
