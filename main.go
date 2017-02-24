@@ -6,9 +6,9 @@ import "fmt"
 func main() {
 
 	c := lexer.StreamFromString(`
-abc = 1
-b = 4
-c = abc + b
+method = (a int, b int) -> int {
+	return a + b
+}
 `)
 
 	l := lexer.NewLexer(c)
