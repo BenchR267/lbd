@@ -57,6 +57,8 @@ func belongsTogether(current []rune, next rune) bool {
 			return next == '='
 		case '>':
 			return next == '='
+		case '-':
+			return next == '>'
 		}
 		return isLetter(current[0]) && isLetter(next)
 	} else if len(current) == 2 {

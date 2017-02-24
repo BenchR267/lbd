@@ -20,6 +20,9 @@ func TestTokenizer(t *testing.T) {
 		{"{", token.CurlyBracket},
 		{"[", token.SquareBracket},
 
+		{"->", token.Arrow},
+		{",", token.Comma},
+
 		{"=", token.Assign},
 		{"+", token.Plus},
 		{"-", token.Minus},

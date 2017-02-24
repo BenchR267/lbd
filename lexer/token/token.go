@@ -30,6 +30,9 @@ const (
 	CurlyBracket
 	SquareBracket
 
+	Arrow
+	Comma
+
 	Assign
 	Plus
 	Minus
@@ -60,6 +63,10 @@ func FromRaw(raw string) Type {
 		fallthrough
 	case "]":
 		return SquareBracket
+	case "->":
+		return Arrow
+	case ",":
+		return Comma
 	case "=":
 		return Assign
 	case "+":
