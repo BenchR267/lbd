@@ -57,10 +57,12 @@ const (
 )
 
 const (
+	// Return is used to return from a function.
 	Return = "return"
 )
 
 const (
+	// Int describes an integer variable type (should maybe moved out of token to parser).
 	Int = "int"
 )
 
@@ -72,6 +74,7 @@ var types = map[string]bool{
 	Int: true,
 }
 
+// FromRaw returns the token.Type for the given raw value.
 func FromRaw(raw string) Type {
 	switch raw {
 	case "(":
@@ -114,19 +117,20 @@ func FromRaw(raw string) Type {
 		return LessEqual
 	}
 	if IsLetter(raw) {
-		if isKeyword(raw) {
+		if IsKeyword(raw) {
 			return Keyword
-		} else if isBuildInType(raw) {
+		} else if IsBuildInType(raw) {
 			return BuildInType
 		}
 		return Identifier
 	}
-	if isInteger(raw) {
+	if IsInteger(raw) {
 		return Integer
 	}
 	return Illegal
 }
 
+// IsLetter returns true if the given string contains only letters
 func IsLetter(s string) bool {
 	for _, r := range s {
 		if !unicode.IsLetter(r) {
@@ -136,7 +140,8 @@ func IsLetter(s string) bool {
 	return true
 }
 
-func isInteger(s string) bool {
+// IsInteger returns true if the given string contains only digits
+func IsInteger(s string) bool {
 	for _, r := range s {
 		if !unicode.IsDigit(r) {
 			return false
@@ -145,12 +150,14 @@ func isInteger(s string) bool {
 	return true
 }
 
-func isKeyword(s string) bool {
+// IsKeyword returns true if the given string is a reserved keyword of the language
+func IsKeyword(s string) bool {
 	_, ok := keywords[s]
 	return ok
 }
 
-func isBuildInType(s string) bool {
+// IsBuildInType returns true if the given string is a reserved built in type
+func IsBuildInType(s string) bool {
 	_, ok := types[s]
 	return ok
 }
