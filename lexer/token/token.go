@@ -23,11 +23,19 @@ type Token struct {
 const (
 	Identifier Type = iota
 
+	Keyword
+	BuildInType
+
 	Integer
 
-	Parenthesis
-	CurlyBracket
-	SquareBracket
+	ParenthesisOpen
+	ParenthesisClose
+
+	CurlyBracketOpen
+	CurlyBracketClose
+
+	SquareBracketOpen
+	SquareBracketClose
 
 	Arrow
 	Comma
@@ -48,14 +56,36 @@ const (
 	Illegal
 )
 
+const (
+	Return = "return"
+)
+
+const (
+	Int = "int"
+)
+
+var keywords = map[string]bool{
+	Return: true,
+}
+
+var types = map[string]bool{
+	Int: true,
+}
+
 func FromRaw(raw string) Type {
 	switch raw {
-	case "(", ")":
-		return Parenthesis
-	case "{", "}":
-		return CurlyBracket
-	case "[", "]":
-		return SquareBracket
+	case "(":
+		return ParenthesisOpen
+	case ")":
+		return ParenthesisClose
+	case "{":
+		return CurlyBracketOpen
+	case "}":
+		return CurlyBracketClose
+	case "[":
+		return SquareBracketOpen
+	case "]":
+		return SquareBracketClose
 	case "->":
 		return Arrow
 	case ",":
@@ -84,6 +114,11 @@ func FromRaw(raw string) Type {
 		return LessEqual
 	}
 	if IsLetter(raw) {
+		if isKeyword(raw) {
+			return Keyword
+		} else if isBuildInType(raw) {
+			return BuildInType
+		}
 		return Identifier
 	}
 	if isInteger(raw) {
@@ -108,4 +143,14 @@ func isInteger(s string) bool {
 		}
 	}
 	return true
+}
+
+func isKeyword(s string) bool {
+	_, ok := keywords[s]
+	return ok
+}
+
+func isBuildInType(s string) bool {
+	_, ok := types[s]
+	return ok
 }

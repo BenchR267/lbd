@@ -7,12 +7,12 @@ func TestFromRaw(t *testing.T) {
 		input    string
 		expected Type
 	}{
-		{"(", Parenthesis},
-		{")", Parenthesis},
-		{"{", CurlyBracket},
-		{"}", CurlyBracket},
-		{"[", SquareBracket},
-		{"]", SquareBracket},
+		{"(", ParenthesisOpen},
+		{")", ParenthesisClose},
+		{"{", CurlyBracketOpen},
+		{"}", CurlyBracketClose},
+		{"[", SquareBracketOpen},
+		{"]", SquareBracketClose},
 		{"->", Arrow},
 		{",", Comma},
 		{"=", Assign},
@@ -29,6 +29,8 @@ func TestFromRaw(t *testing.T) {
 		{"$", Illegal},
 		{"aVariable", Identifier},
 		{"125", Integer},
+		{"return", Keyword},
+		{"int", BuildInType},
 	}
 
 	for _, test := range tests {
@@ -45,10 +47,15 @@ func TestTypeString(t *testing.T) {
 		expected string
 	}{
 		{Identifier, "Identifier"},
+		{Keyword, "Keyword"},
+		{BuildInType, "BuildInType"},
 		{Integer, "Integer"},
-		{Parenthesis, "Parenthesis"},
-		{CurlyBracket, "CurlyBracket"},
-		{SquareBracket, "SquareBracket"},
+		{ParenthesisOpen, "ParenthesisOpen"},
+		{ParenthesisClose, "ParenthesisClose"},
+		{CurlyBracketOpen, "CurlyBracketOpen"},
+		{CurlyBracketClose, "CurlyBracketClose"},
+		{SquareBracketOpen, "SquareBracketOpen"},
+		{SquareBracketClose, "SquareBracketClose"},
 		{Arrow, "Arrow"},
 		{Assign, "Assign"},
 		{Plus, "Plus"},
