@@ -18,7 +18,8 @@ func TestTokenizer(t *testing.T) {
 
 		{"(", token.Parenthesis},
 		{"{", token.CurlyBracket},
-		{"[", token.SquareBracket},
+		{"[", token.SquareBracketOpen},
+		{"]", token.SquareBracketClose},
 
 		{"->", token.Arrow},
 		{",", token.Comma},
