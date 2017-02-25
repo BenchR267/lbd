@@ -3,55 +3,52 @@ package lexer
 import "github.com/BenchR267/lbd/lexer/token"
 
 type Lexer struct {
-	input <-chan rune
-
 	NextToken chan token.Token
 
-	currentPosition token.Position
-
-	buffer Tokenizer
+	input  <-chan rune
+	curPos token.Position
+	buffer tokenizer
 }
 
 func NewLexer(inputStream <-chan rune) *Lexer {
 	l := &Lexer{
-		input:     inputStream,
 		NextToken: make(chan token.Token),
-		currentPosition: token.Position{
+		input:     inputStream,
+		curPos: token.Position{
 			Column: 0,
 			Line:   0,
 		},
-		buffer: Tokenizer{
+		buffer: tokenizer{
 			content: []rune{},
 		},
 	}
 	return l
 }
 
-func (l Lexer) Start() {
+func (l *Lexer) Start() {
 	go func() {
 		for b := range l.input {
-
 			if !isWhitespace(b) {
-				t := l.buffer.append(b, l.currentPosition)
+				t := l.buffer.append(b, l.curPos)
 				if t != nil {
 					l.NextToken <- *t
 				}
 			} else {
-				t := l.buffer.token(l.currentPosition)
+				t := l.buffer.token(l.curPos)
 				if t != nil {
 					l.NextToken <- *t
 				}
 			}
 
 			if b == '\n' {
-				l.currentPosition.Column = 0
-				l.currentPosition.Line++
+				l.curPos.Column = 0
+				l.curPos.Line++
 			} else {
-				l.currentPosition.Column++
+				l.curPos.Column++
 			}
 
 		}
-		t := l.buffer.token(l.currentPosition)
+		t := l.buffer.token(l.curPos)
 		if t != nil {
 			l.NextToken <- *t
 		}
