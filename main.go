@@ -2,14 +2,14 @@ package main
 
 import "github.com/BenchR267/lbd/lexer"
 import "fmt"
+import "log"
 
 func main() {
 
-	c := lexer.StreamFromString(`
-method = (a int, b int) -> int {
-	return a + b
-}
-`)
+	c, err := lexer.StreamFromFile("src/main.lbd")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	l := lexer.NewLexer(c)
 

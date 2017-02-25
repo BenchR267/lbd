@@ -1,6 +1,8 @@
 package lexer
 
 import "testing"
+import "unicode/utf8"
+import "os"
 
 func TestStreamFromString(t *testing.T) {
 	count := 0
@@ -9,9 +11,9 @@ func TestStreamFromString(t *testing.T) {
 
 	stream := StreamFromString(input)
 
-	for b := range stream {
-		if b != rune(input[count]) {
-			t.Errorf("Expected to receive %c over channel at index %d from input %s", b, count, input)
+	for r := range stream {
+		if r != rune(input[count]) {
+			t.Errorf("Expected to receive %c over channel at index %d from input %s", r, count, input)
 		}
 		count++
 	}
@@ -19,6 +21,50 @@ func TestStreamFromString(t *testing.T) {
 	if count != len(input) {
 		t.Errorf("Expected count (%d) to be equal to %d.", count, len(input))
 	}
+}
+
+func TestStreamFromFile(t *testing.T) {
+	_, err := StreamFromFile("aNonExistingFile.lbd")
+	if err == nil {
+		t.Error("Expected to get error when opening non existing file, but got nil instead.")
+	}
+
+	const fileName = "../src/main.lbd"
+
+	size, err := fileSize(fileName)
+	if err != nil {
+		t.Errorf("Expected to get no error when opening existing file, but got %s instead.", err.Error())
+	}
+
+	s, err := StreamFromFile(fileName)
+	if err != nil {
+		t.Errorf("Expected to get no error when opening existing file, but got %s instead.", err.Error())
+	}
+	if s == nil {
+		t.Error("Expected stream of existing file to be non nil.")
+	}
+
+	i := int64(0)
+	for r := range s {
+		i += int64(utf8.RuneLen(r))
+	}
+
+	if i != size {
+		t.Errorf("Expected to get filesize of 85 instead of %d", i)
+	}
+}
+
+func fileSize(fileName string) (size int64, err error) {
+	f, err := os.Open(fileName)
+	if err != nil {
+		return
+	}
+	fi, err := f.Stat()
+	if err != nil {
+		return
+	}
+	size = fi.Size()
+	return
 }
 
 func TestIsWhitespace(t *testing.T) {
