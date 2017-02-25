@@ -38,6 +38,7 @@ func StreamFromFile(filename string) (stream <-chan rune, err error) {
 			}
 			fileStream <- r
 		}
+		file.Close()
 	}()
 
 	stream = fileStream
