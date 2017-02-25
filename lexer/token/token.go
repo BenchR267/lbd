@@ -44,6 +44,7 @@ const (
 	Plus
 	Minus
 	Slash
+	Multiply
 	Percent
 
 	Equal
@@ -101,6 +102,8 @@ func FromRaw(raw string) Type {
 		return Minus
 	case "/":
 		return Slash
+	case "*":
+		return Multiply
 	case "%":
 		return Percent
 	case "==":
