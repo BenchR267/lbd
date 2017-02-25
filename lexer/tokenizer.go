@@ -57,7 +57,7 @@ func belongsTogether(current []rune, next rune) bool {
 		case '-':
 			return next == '>'
 		}
-		return isLetter(current[0]) && isLetter(next)
+		return unicode.IsLetter(current[0]) && unicode.IsLetter(next)
 	} else if len(current) == 2 {
 		s := string(current)
 		t := token.FromRaw(s)

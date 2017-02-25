@@ -110,24 +110,3 @@ func TestIsWhitespace(t *testing.T) {
 		}
 	}
 }
-
-func TestIsLetter(t *testing.T) {
-	testCases := []struct {
-		input    rune
-		expected bool
-	}{
-		{'a', true},
-		{'b', true},
-		{'\n', false},
-		{' ', false},
-		{'3', false},
-		{'$', false},
-	}
-
-	for _, c := range testCases {
-		got := isLetter(c.input)
-		if got != c.expected {
-			t.Errorf("Letter test fail. Input: %c - Expected: %#v - Got: %#v", c.input, c.expected, got)
-		}
-	}
-}

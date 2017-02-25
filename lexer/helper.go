@@ -3,9 +3,9 @@ package lexer
 import (
 	"bufio"
 	"os"
-	"unicode"
 )
 
+// StreamFromString returns a read only rune channel representing the given string.
 func StreamFromString(input string) <-chan rune {
 	c := make(chan rune)
 
@@ -19,6 +19,7 @@ func StreamFromString(input string) <-chan rune {
 	return c
 }
 
+// StreamFromFile returns a read only rune channel representing the given file content.
 func StreamFromFile(filename string) (stream <-chan rune, err error) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -44,6 +45,7 @@ func StreamFromFile(filename string) (stream <-chan rune, err error) {
 	return
 }
 
+// CombineStreams creates a sequence of the given streams, processing all successively.
 func CombineStreams(streams ...<-chan rune) <-chan rune {
 	newChan := make(chan rune)
 	go func() {
@@ -57,10 +59,7 @@ func CombineStreams(streams ...<-chan rune) <-chan rune {
 	return newChan
 }
 
+// isWhitespace defines if a given rune should be handled as whitespace.
 func isWhitespace(b rune) bool {
 	return b == '\n' || b == ' ' || b == '\t'
-}
-
-func isLetter(b rune) bool {
-	return unicode.IsLetter(b)
 }
