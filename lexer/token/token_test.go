@@ -7,8 +7,8 @@ func TestFromRaw(t *testing.T) {
 		input    string
 		expected Type
 	}{
-		{"(", Parenthesis},
-		{")", Parenthesis},
+		{"(", ParenthesisOpen},
+		{")", ParenthesisClose},
 		{"{", CurlyBracketOpen},
 		{"}", CurlyBracketClose},
 		{"[", SquareBracketOpen},
@@ -50,7 +50,8 @@ func TestTypeString(t *testing.T) {
 		{Keyword, "Keyword"},
 		{BuildInType, "BuildInType"},
 		{Integer, "Integer"},
-		{Parenthesis, "Parenthesis"},
+		{ParenthesisOpen, "ParenthesisOpen"},
+		{ParenthesisClose, "ParenthesisClose"},
 		{CurlyBracketOpen, "CurlyBracketOpen"},
 		{CurlyBracketClose, "CurlyBracketClose"},
 		{SquareBracketOpen, "SquareBracketOpen"},

@@ -29,9 +29,12 @@ const (
 
 	Integer
 
-	Parenthesis
+	ParenthesisOpen
+	ParenthesisClose
+
 	CurlyBracketOpen
 	CurlyBracketClose
+
 	SquareBracketOpen
 	SquareBracketClose
 
@@ -73,9 +76,9 @@ var types = map[string]bool{
 func FromRaw(raw string) Type {
 	switch raw {
 	case "(":
-		fallthrough
+		return ParenthesisOpen
 	case ")":
-		return Parenthesis
+		return ParenthesisClose
 	case "{":
 		return CurlyBracketOpen
 	case "}":
