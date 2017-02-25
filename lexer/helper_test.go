@@ -67,6 +67,30 @@ func fileSize(fileName string) (size int64, err error) {
 	return
 }
 
+func TestCombineStreams(t *testing.T) {
+	s1 := StreamFromString("a = 4")
+	s2 := StreamFromString("b = 5")
+	if s1 == nil || s2 == nil {
+		t.Error("Expected both streams to be non nil")
+	}
+
+	combined := CombineStreams(s1, s2)
+
+	runes := []rune{'a', ' ', '=', ' ', '4', 'b', ' ', '=', ' ', '5'}
+
+	i := 0
+	for r := range combined {
+		if r != runes[i] {
+			t.Errorf("Expected to get %c at index %d, but got %c instead.", runes[i], i, r)
+		}
+		i++
+	}
+
+	if i != len(runes) {
+		t.Errorf("Expected to get %d runes, but got %s instead.", len(runes), i)
+	}
+}
+
 func TestIsWhitespace(t *testing.T) {
 	testCases := []struct {
 		input    rune

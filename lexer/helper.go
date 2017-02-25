@@ -44,6 +44,19 @@ func StreamFromFile(filename string) (stream <-chan rune, err error) {
 	return
 }
 
+func CombineStreams(streams ...<-chan rune) <-chan rune {
+	newChan := make(chan rune)
+	go func() {
+		for _, s := range streams {
+			for r := range s {
+				newChan <- r
+			}
+		}
+		close(newChan)
+	}()
+	return newChan
+}
+
 func isWhitespace(b rune) bool {
 	return b == '\n' || b == ' ' || b == '\t'
 }
