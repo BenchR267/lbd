@@ -12,10 +12,14 @@ add = (a int, b int) -> int {
 	return a + b
 }
 
+mul = (x int, y int) -> int {
+	return x * y
+}
+
 a = 5
 b = 4
 c = add(a, b)
-print(c)
+d = mul(a, b)
 ```
 
 Thanks!
