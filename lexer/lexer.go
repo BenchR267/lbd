@@ -2,6 +2,10 @@ package lexer
 
 import "github.com/BenchR267/lbd/lexer/token"
 
+// Lexer represents an instance to get a lexical representation of the source code.
+//
+// It works in it's own go routine, so after creation with NewLexer get the tokens via
+// the NextToken field.
 type Lexer struct {
 	NextToken chan token.Token
 
@@ -10,6 +14,7 @@ type Lexer struct {
 	buffer tokenizer
 }
 
+// NewLexer creates a new instance of Lexer, ready to be started.
 func NewLexer(inputStream <-chan rune) *Lexer {
 	l := &Lexer{
 		NextToken: make(chan token.Token),
@@ -25,6 +30,8 @@ func NewLexer(inputStream <-chan rune) *Lexer {
 	return l
 }
 
+// Start will read from the inputStream, forwarding tokens via NextToken.
+// Start runs in its own go routine and will get a zombie if NextToken is not read!
 func (l *Lexer) Start() {
 	go func() {
 		for b := range l.input {
