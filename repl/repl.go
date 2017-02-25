@@ -2,6 +2,7 @@ package repl
 
 import (
 	"fmt"
+	"io"
 	"os"
 
 	"bufio"
@@ -9,11 +10,14 @@ import (
 	"github.com/BenchR267/lbd/lexer"
 )
 
+var reader io.Reader = os.Stdin
+var writer io.Writer = os.Stdout
+
 // Start is starting the interactive REPL (currently just printing out tokens)
 func Start() {
-	scanner := bufio.NewScanner(os.Stdin)
+	scanner := bufio.NewScanner(reader)
 	for {
-		fmt.Print("lbd $ ")
+		fmt.Fprint(writer, "lbd $ ")
 		scanner.Scan()
 		text := scanner.Text()
 		if text == "e" || text == "exit" {
@@ -22,8 +26,8 @@ func Start() {
 		l := lexer.NewLexer(lexer.StreamFromString(text))
 		l.Start()
 		for t := range l.NextToken {
-			fmt.Println(t)
+			fmt.Fprintln(writer, t)
 		}
-		fmt.Println()
+		fmt.Fprintln(writer)
 	}
 }
