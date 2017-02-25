@@ -24,6 +24,8 @@ type Token struct {
 const (
 	Identifier Type = iota
 
+	Keyword
+
 	Integer
 
 	Parenthesis
@@ -48,6 +50,14 @@ const (
 
 	Illegal
 )
+
+const (
+	Return = "return"
+)
+
+var keywords = map[string]bool{
+	Return: true,
+}
 
 func FromRaw(raw string) Type {
 	switch raw {
@@ -91,6 +101,9 @@ func FromRaw(raw string) Type {
 		return LessEqual
 	}
 	if IsLetter(raw) {
+		if isKeyword(raw) {
+			return Keyword
+		}
 		return Identifier
 	} else if isInteger(raw) {
 		return Integer
@@ -114,4 +127,9 @@ func isInteger(s string) bool {
 		}
 	}
 	return true
+}
+
+func isKeyword(s string) bool {
+	_, ok := keywords[s]
+	return ok
 }

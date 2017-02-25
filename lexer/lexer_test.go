@@ -224,7 +224,7 @@ a = (a int, b int) -> int {
 		{token.Arrow, "->"},
 		{token.Identifier, "int"},
 		{token.CurlyBracket, "{"},
-		{token.Identifier, "return"},
+		{token.Keyword, "return"},
 		{token.Identifier, "a"},
 		{token.Plus, "+"},
 		{token.Identifier, "b"},

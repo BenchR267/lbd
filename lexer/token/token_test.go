@@ -29,6 +29,7 @@ func TestFromRaw(t *testing.T) {
 		{"$", Illegal},
 		{"aVariable", Identifier},
 		{"125", Integer},
+		{"return", Keyword},
 	}
 
 	for _, test := range tests {
@@ -45,6 +46,7 @@ func TestTypeString(t *testing.T) {
 		expected string
 	}{
 		{Identifier, "Identifier"},
+		{Keyword, "Keyword"},
 		{Integer, "Integer"},
 		{Parenthesis, "Parenthesis"},
 		{CurlyBracket, "CurlyBracket"},
