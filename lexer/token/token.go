@@ -25,6 +25,7 @@ const (
 	Identifier Type = iota
 
 	Keyword
+	BuildInType
 
 	Integer
 
@@ -55,8 +56,16 @@ const (
 	Return = "return"
 )
 
+const (
+	Int = "int"
+)
+
 var keywords = map[string]bool{
 	Return: true,
+}
+
+var types = map[string]bool{
+	Int: true,
 }
 
 func FromRaw(raw string) Type {
@@ -103,6 +112,8 @@ func FromRaw(raw string) Type {
 	if IsLetter(raw) {
 		if isKeyword(raw) {
 			return Keyword
+		} else if isBuildInType(raw) {
+			return BuildInType
 		}
 		return Identifier
 	} else if isInteger(raw) {
@@ -131,5 +142,10 @@ func isInteger(s string) bool {
 
 func isKeyword(s string) bool {
 	_, ok := keywords[s]
+	return ok
+}
+
+func isBuildInType(s string) bool {
+	_, ok := types[s]
 	return ok
 }

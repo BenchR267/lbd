@@ -30,6 +30,7 @@ func TestFromRaw(t *testing.T) {
 		{"aVariable", Identifier},
 		{"125", Integer},
 		{"return", Keyword},
+		{"int", BuildInType},
 	}
 
 	for _, test := range tests {
@@ -47,6 +48,7 @@ func TestTypeString(t *testing.T) {
 	}{
 		{Identifier, "Identifier"},
 		{Keyword, "Keyword"},
+		{BuildInType, "BuildInType"},
 		{Integer, "Integer"},
 		{Parenthesis, "Parenthesis"},
 		{CurlyBracket, "CurlyBracket"},
