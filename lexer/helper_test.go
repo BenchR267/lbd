@@ -29,7 +29,7 @@ func TestStreamFromFile(t *testing.T) {
 		t.Error("Expected to get error when opening non existing file, but got nil instead.")
 	}
 
-	const fileName = "../src/main.lbd"
+	const fileName = "../example/main.lbd"
 
 	size, err := fileSize(fileName)
 	if err != nil {

@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	c, err := lexer.StreamFromFile("src/main.lbd")
+	c, err := lexer.StreamFromFile("example/main.lbd")
 	if err != nil {
 		log.Fatal(err)
 	}
