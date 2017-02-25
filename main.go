@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-  "log"
+	"log"
 
 	"github.com/BenchR267/lbd/lexer"
 )
 
+func main() {
 	c, err := lexer.StreamFromFile("src/main.lbd")
 	if err != nil {
 		log.Fatal(err)
