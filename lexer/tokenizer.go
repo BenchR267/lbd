@@ -6,30 +6,29 @@ import (
 	"github.com/BenchR267/lbd/lexer/token"
 )
 
-type Tokenizer struct {
+type tokenizer struct {
 	content []rune
 }
 
-func (b *Tokenizer) append(by rune, pos token.Position) *token.Token {
-
-	content := b.content
-
+func (t *tokenizer) append(by rune, pos token.Position) *token.Token {
+	content := t.content
 	defer func() {
-		b.content = append(b.content, by)
+		t.content = append(t.content, by)
 	}()
 
 	if !belongsTogether(content, by) {
-		return b.token(pos)
+		return t.token(pos)
 	}
 	return nil
 }
 
-func (b *Tokenizer) token(currentPosition token.Position) *token.Token {
-	content := string(b.content)
+func (t *tokenizer) token(currentPosition token.Position) *token.Token {
+	content := string(t.content)
 	if len(content) == 0 {
 		return nil
 	}
-	b.content = []rune{}
+
+	t.content = []rune{}
 	p := currentPosition
 	p.Column -= len(content)
 	p.Len = len(content)
@@ -49,9 +48,7 @@ func belongsTogether(current []rune, next rune) bool {
 		switch current[0] {
 		case '+':
 			return next == '+'
-		case '!':
-			fallthrough
-		case '=':
+		case '!', '=':
 			return next == '='
 		case '<':
 			return next == '='
@@ -67,11 +64,9 @@ func belongsTogether(current []rune, next rune) bool {
 
 		if t != token.Identifier && t != token.Integer && t != token.Illegal {
 			return t == token.Illegal
-		} else {
-			return unicode.IsLetter(rune(next))
 		}
+		return unicode.IsLetter(rune(next))
 	} else {
 		return unicode.IsLetter(rune(next)) && token.IsLetter(string(current))
 	}
-
 }

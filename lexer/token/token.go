@@ -2,25 +2,24 @@ package token
 
 import "unicode"
 
-// Type defines the type of a token
+// Type defines the type of a token.
 type Type int
 
-// Position defines the position in the source code
+// Position defines the position in the source code.
 type Position struct {
 	Line   int
 	Column int
 	Len    int
 }
 
-// Token defines one token in the source code
+// Token defines one token in the source code.
 type Token struct {
-	Pos Position
-
+	Pos  Position
 	Type Type
 	Raw  string
 }
 
-// All possible token types
+// All possible token types.
 const (
 	Identifier Type = iota
 
@@ -51,17 +50,11 @@ const (
 
 func FromRaw(raw string) Type {
 	switch raw {
-	case "(":
-		fallthrough
-	case ")":
+	case "(", ")":
 		return Parenthesis
-	case "{":
-		fallthrough
-	case "}":
+	case "{", "}":
 		return CurlyBracket
-	case "[":
-		fallthrough
-	case "]":
+	case "[", "]":
 		return SquareBracket
 	case "->":
 		return Arrow
@@ -92,7 +85,8 @@ func FromRaw(raw string) Type {
 	}
 	if IsLetter(raw) {
 		return Identifier
-	} else if isInteger(raw) {
+	}
+	if isInteger(raw) {
 		return Integer
 	}
 	return Illegal
