@@ -223,12 +223,12 @@ a = (a int, b int) -> int {
 		{token.Parenthesis, ")"},
 		{token.Arrow, "->"},
 		{token.BuildInType, "int"},
-		{token.CurlyBracket, "{"},
+		{token.CurlyBracketOpen, "{"},
 		{token.Keyword, "return"},
 		{token.Identifier, "a"},
 		{token.Plus, "+"},
 		{token.Identifier, "b"},
-		{token.CurlyBracket, "}"},
+		{token.CurlyBracketClose, "}"},
 	}
 
 	i := 0

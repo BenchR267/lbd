@@ -30,7 +30,8 @@ const (
 	Integer
 
 	Parenthesis
-	CurlyBracket
+	CurlyBracketOpen
+	CurlyBracketClose
 	SquareBracketOpen
 	SquareBracketClose
 
@@ -76,9 +77,9 @@ func FromRaw(raw string) Type {
 	case ")":
 		return Parenthesis
 	case "{":
-		fallthrough
+		return CurlyBracketOpen
 	case "}":
-		return CurlyBracket
+		return CurlyBracketClose
 	case "[":
 		return SquareBracketOpen
 	case "]":
