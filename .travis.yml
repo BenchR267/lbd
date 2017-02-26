@@ -5,6 +5,7 @@ before_install:
   - go get -u github.com/golang/lint/golint
 
 script:
+  - go test github.com/BenchR267/lbd/...
   - $HOME/gopath/bin/goveralls -service=travis-ci
 
 go:
