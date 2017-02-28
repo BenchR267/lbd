@@ -87,7 +87,7 @@ func TestCombineStreams(t *testing.T) {
 	}
 
 	if i != len(runes) {
-		t.Errorf("Expected to get %d runes, but got %s instead.", len(runes), i)
+		t.Errorf("Expected to get %d runes, but got %d instead.", len(runes), i)
 	}
 }
 
