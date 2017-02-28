@@ -12,17 +12,17 @@ func TestIgnoreWhitespace(t *testing.T) {
 	l.Start()
 
 	expectedValues := []token.Token{
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 0, Len: 1},
 			Type: token.Identifier,
 			Raw:  "a",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 1, Len: 1},
 			Type: token.Assign,
 			Raw:  "=",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 6, Len: 1},
 			Type: token.Integer,
 			Raw:  "5",
@@ -47,27 +47,27 @@ func TestStart_OneLine(t *testing.T) {
 	l.Start()
 
 	expectedValues := []token.Token{
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 0, Len: 3},
 			Type: token.Identifier,
 			Raw:  "abc",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 4, Len: 1},
 			Type: token.Assign,
 			Raw:  "=",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 6, Len: 3},
 			Type: token.Identifier,
 			Raw:  "dfe",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 10, Len: 1},
 			Type: token.Plus,
 			Raw:  "+",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 12, Len: 1},
 			Type: token.Integer,
 			Raw:  "3",
@@ -94,57 +94,57 @@ c = a + b`)
 	l.Start()
 
 	expectedValues := []token.Token{
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 0, Len: 1},
 			Type: token.Identifier,
 			Raw:  "a",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 2, Len: 1},
 			Type: token.Assign,
 			Raw:  "=",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 4, Len: 1},
 			Type: token.Integer,
 			Raw:  "5",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 1, Column: 0, Len: 1},
 			Type: token.Identifier,
 			Raw:  "b",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 1, Column: 2, Len: 1},
 			Type: token.Assign,
 			Raw:  "=",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 1, Column: 4, Len: 1},
 			Type: token.Integer,
 			Raw:  "4",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 2, Column: 0, Len: 1},
 			Type: token.Identifier,
 			Raw:  "c",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 2, Column: 2, Len: 1},
 			Type: token.Assign,
 			Raw:  "=",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 2, Column: 4, Len: 1},
 			Type: token.Identifier,
 			Raw:  "a",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 2, Column: 6, Len: 1},
 			Type: token.Plus,
 			Raw:  "+",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 2, Column: 8, Len: 1},
 			Type: token.Identifier,
 			Raw:  "b",
@@ -169,17 +169,17 @@ func TestConditions(t *testing.T) {
 	l.Start()
 
 	expectedValues := []token.Token{
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 0, Len: 1},
 			Type: token.Identifier,
 			Raw:  "a",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 1, Len: 2},
 			Type: token.LessEqual,
 			Raw:  "<=",
 		},
-		token.Token{
+		{
 			Pos:  token.Position{Line: 0, Column: 3, Len: 1},
 			Type: token.Identifier,
 			Raw:  "b",
