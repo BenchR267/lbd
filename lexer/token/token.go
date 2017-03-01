@@ -24,7 +24,6 @@ const (
 	Identifier Type = iota
 
 	Keyword
-	BuildInType
 
 	Integer
 
@@ -62,17 +61,8 @@ const (
 	Return = "return"
 )
 
-const (
-	// Int describes an integer variable type (should maybe moved out of token to parser).
-	Int = "int"
-)
-
 var keywords = map[string]bool{
 	Return: true,
-}
-
-var types = map[string]bool{
-	Int: true,
 }
 
 // FromRaw returns the token.Type for the given raw value.
@@ -122,8 +112,6 @@ func FromRaw(raw string) Type {
 	if IsLetter(raw) {
 		if IsKeyword(raw) {
 			return Keyword
-		} else if IsBuildInType(raw) {
-			return BuildInType
 		}
 		return Identifier
 	}
@@ -156,11 +144,5 @@ func IsInteger(s string) bool {
 // IsKeyword returns true if the given string is a reserved keyword of the language
 func IsKeyword(s string) bool {
 	_, ok := keywords[s]
-	return ok
-}
-
-// IsBuildInType returns true if the given string is a reserved built in type
-func IsBuildInType(s string) bool {
-	_, ok := types[s]
 	return ok
 }

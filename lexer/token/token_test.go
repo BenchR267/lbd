@@ -29,9 +29,9 @@ func TestFromRaw(t *testing.T) {
 		{"<=", LessEqual},
 		{"$", Illegal},
 		{"aVariable", Identifier},
+		{"int", Identifier},
 		{"125", Integer},
 		{"return", Keyword},
-		{"int", BuildInType},
 	}
 
 	for _, test := range tests {
@@ -49,7 +49,6 @@ func TestTypeString(t *testing.T) {
 	}{
 		{Identifier, "Identifier"},
 		{Keyword, "Keyword"},
-		{BuildInType, "BuildInType"},
 		{Integer, "Integer"},
 		{ParenthesisOpen, "ParenthesisOpen"},
 		{ParenthesisClose, "ParenthesisClose"},
