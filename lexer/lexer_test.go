@@ -8,8 +8,8 @@ import (
 
 func TestIgnoreWhitespace(t *testing.T) {
 	stream := StreamFromString("a=    5")
-	l := NewLexer(stream)
-	l.Start()
+	l := NewLexer()
+	l.Start(stream)
 
 	expectedValues := []token.Token{
 		{
@@ -43,8 +43,8 @@ func TestIgnoreWhitespace(t *testing.T) {
 
 func TestStart_OneLine(t *testing.T) {
 	stream := StreamFromString("abc = dfe + 3")
-	l := NewLexer(stream)
-	l.Start()
+	l := NewLexer()
+	l.Start(stream)
 
 	expectedValues := []token.Token{
 		{
@@ -90,8 +90,8 @@ func TestStart_MultipleLines(t *testing.T) {
 	stream := StreamFromString(`a = 5
 b = 4
 c = a + b`)
-	l := NewLexer(stream)
-	l.Start()
+	l := NewLexer()
+	l.Start(stream)
 
 	expectedValues := []token.Token{
 		{
@@ -165,8 +165,8 @@ c = a + b`)
 
 func TestConditions(t *testing.T) {
 	stream := StreamFromString("a<=b")
-	l := NewLexer(stream)
-	l.Start()
+	l := NewLexer()
+	l.Start(stream)
 
 	expectedValues := []token.Token{
 		{
@@ -205,8 +205,8 @@ a = (a int, b int) -> int {
 }
 	`)
 
-	l := NewLexer(stream)
-	l.Start()
+	l := NewLexer()
+	l.Start(stream)
 
 	expectedValues := []struct {
 		Type token.Type
@@ -245,4 +245,25 @@ a = (a int, b int) -> int {
 
 		i++
 	}
+
+}
+
+func TestStartError(t *testing.T) {
+	l := NewLexer()
+
+	err := l.Start(nil)
+	if err == nil || err != ErrInputStreamNil {
+		t.Errorf("Expected err to be ErrInputStreamNil, but got %v", err)
+	}
+
+	err = l.Start(StreamFromString("a = b"))
+	if err != nil {
+		t.Errorf("Expected err to be nil, but got %v", err)
+	}
+
+	err = l.Start(StreamFromString("b = 6"))
+	if err == nil || err != ErrNotFinished {
+		t.Errorf("Expected err to be ErrNotFinished, but got %v", err)
+	}
+
 }

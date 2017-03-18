@@ -1,6 +1,18 @@
 package lexer
 
-import "github.com/BenchR267/lbd/lexer/token"
+import (
+	"errors"
+
+	"github.com/BenchR267/lbd/lexer/token"
+)
+
+var (
+	// ErrNotFinished is returned on Start() when Lexer was started before and has not finished yet
+	ErrNotFinished = errors.New("lexer still not finished lexing")
+
+	// ErrInputStreamNil is returned on Start() if the given inputStream is nil
+	ErrInputStreamNil = errors.New("input stream should not be nil")
+)
 
 // Lexer represents an instance to get a lexical representation of the source code.
 //
@@ -15,10 +27,8 @@ type Lexer struct {
 }
 
 // NewLexer creates a new instance of Lexer, ready to be started.
-func NewLexer(inputStream <-chan rune) *Lexer {
+func NewLexer() *Lexer {
 	l := &Lexer{
-		NextToken: make(chan token.Token),
-		input:     inputStream,
 		curPos: token.Position{
 			Column: 0,
 			Line:   0,
@@ -32,7 +42,15 @@ func NewLexer(inputStream <-chan rune) *Lexer {
 
 // Start will read from the inputStream, forwarding tokens via NextToken.
 // Start runs in its own go routine and will get a zombie if NextToken is not read!
-func (l *Lexer) Start() {
+func (l *Lexer) Start(inputStream <-chan rune) error {
+	if l.input != nil {
+		return ErrNotFinished
+	}
+	if inputStream == nil {
+		return ErrInputStreamNil
+	}
+	l.input = inputStream
+	l.NextToken = make(chan token.Token)
 	go func() {
 		for b := range l.input {
 			if !isWhitespace(b) {
@@ -59,6 +77,8 @@ func (l *Lexer) Start() {
 		if t != nil {
 			l.NextToken <- *t
 		}
+		l.input = nil
 		close(l.NextToken)
 	}()
+	return nil
 }
