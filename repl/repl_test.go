@@ -7,7 +7,7 @@ import (
 )
 
 func TestStart(t *testing.T) {
-	reader = strings.NewReader("a=5\nexit")
+	reader = strings.NewReader("a=5\nb=3")
 	buf := new(bytes.Buffer)
 	writer = buf
 
@@ -20,7 +20,7 @@ func TestStart(t *testing.T) {
 	}
 
 	lines := strings.Split(s, "\n")
-	if len(lines) != 5 {
+	if len(lines) != 9 {
 		t.Errorf("Expected to get 5 output lines, but got %d instead.", len(lines))
 	}
 }
