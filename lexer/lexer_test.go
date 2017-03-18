@@ -8,7 +8,7 @@ import (
 
 func TestIgnoreWhitespace(t *testing.T) {
 	stream := StreamFromString("a=    5")
-	l := NewLexer()
+	l := New()
 	l.Start(stream)
 
 	expectedValues := []token.Token{
@@ -43,7 +43,7 @@ func TestIgnoreWhitespace(t *testing.T) {
 
 func TestStart_OneLine(t *testing.T) {
 	stream := StreamFromString("abc = dfe + 3")
-	l := NewLexer()
+	l := New()
 	l.Start(stream)
 
 	expectedValues := []token.Token{
@@ -90,7 +90,7 @@ func TestStart_MultipleLines(t *testing.T) {
 	stream := StreamFromString(`a = 5
 b = 4
 c = a + b`)
-	l := NewLexer()
+	l := New()
 	l.Start(stream)
 
 	expectedValues := []token.Token{
@@ -165,7 +165,7 @@ c = a + b`)
 
 func TestConditions(t *testing.T) {
 	stream := StreamFromString("a<=b")
-	l := NewLexer()
+	l := New()
 	l.Start(stream)
 
 	expectedValues := []token.Token{
@@ -205,7 +205,7 @@ a = (a int, b int) -> int {
 }
 	`)
 
-	l := NewLexer()
+	l := New()
 	l.Start(stream)
 
 	expectedValues := []struct {
@@ -249,7 +249,7 @@ a = (a int, b int) -> int {
 }
 
 func TestStartError(t *testing.T) {
-	l := NewLexer()
+	l := New()
 
 	err := l.Start(nil)
 	if err == nil || err != ErrInputStreamNil {

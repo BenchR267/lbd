@@ -16,7 +16,7 @@ var writer io.Writer = os.Stdout
 // Start is starting the interactive REPL (currently just printing out tokens)
 func Start() {
 
-	l := lexer.NewLexer()
+	l := lexer.New()
 
 	scanner := bufio.NewScanner(reader)
 	for {

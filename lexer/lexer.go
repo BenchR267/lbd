@@ -26,8 +26,8 @@ type Lexer struct {
 	buffer tokenizer
 }
 
-// NewLexer creates a new instance of Lexer, ready to be started.
-func NewLexer() *Lexer {
+// New creates a new instance of Lexer, ready to be started.
+func New() *Lexer {
 	l := &Lexer{
 		curPos: token.Position{
 			Column: 0,
