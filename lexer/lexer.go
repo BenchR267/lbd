@@ -42,43 +42,46 @@ func New() *Lexer {
 
 // Start will read from the inputStream, forwarding tokens via NextToken.
 // Start runs in its own go routine and will get a zombie if NextToken is not read!
-func (l *Lexer) Start(inputStream <-chan rune) error {
-	if l.input != nil {
+func (lex *Lexer) Start(inputStream <-chan rune) error {
+	if lex.input != nil {
 		return ErrNotFinished
 	}
 	if inputStream == nil {
 		return ErrInputStreamNil
 	}
-	l.input = inputStream
-	l.NextToken = make(chan token.Token)
+	lex.input = inputStream
+	lex.NextToken = make(chan token.Token)
 	go func() {
-		for b := range l.input {
+		for b := range lex.input {
+
+			var t *token.Token
+
 			if !isWhitespace(b) {
-				t := l.buffer.append(b, l.curPos)
-				if t != nil {
-					l.NextToken <- *t
-				}
+				t = lex.buffer.append(b, lex.curPos)
 			} else {
-				t := l.buffer.token(l.curPos)
-				if t != nil {
-					l.NextToken <- *t
-				}
+				t = lex.buffer.token(lex.curPos)
+			}
+
+			if t != nil {
+				lex.NextToken <- *t
 			}
 
 			if b == '\n' {
-				l.curPos.Column = 0
-				l.curPos.Line++
+				lex.curPos.Column = 0
+				lex.curPos.Line++
 			} else {
-				l.curPos.Column++
+				lex.curPos.Column++
 			}
 
 		}
-		t := l.buffer.token(l.curPos)
+
+		t := lex.buffer.token(lex.curPos)
 		if t != nil {
-			l.NextToken <- *t
+			lex.NextToken <- *t
 		}
-		l.input = nil
-		close(l.NextToken)
+
+		lex.input = nil
+		close(lex.NextToken)
 	}()
 	return nil
 }
