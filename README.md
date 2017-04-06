@@ -21,5 +21,3 @@ b = 4
 c = add(a, b)
 d = mul(a, b)
 ```
-
-Thanks!
